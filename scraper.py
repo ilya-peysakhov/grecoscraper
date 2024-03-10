@@ -8,11 +8,20 @@ st.set_page_config(layout='wide')
 
 st.title('Scraper')
 
-start = st.button('Start')
+
+
+c1, c2 = st.columns(2)
+
+with c1:
+    start = st.button('Start')
+with c2:
+    stop = st.button('Stop')
 
 if not start:
     st.stop()
 
+if stop:
+    st.stop()
 
 config = yaml.safe_load(open('scrape_ufc_stats_config.yaml'))
 events_url = config['completed_events_all_url']
