@@ -23,7 +23,8 @@ def getEvents():
     return all_event_details_df
 all_event_details_df = getEvents()
 
-st.write(all_event_details_df)
+with st.popover("View Events DF"):
+    st.dataframe(all_event_details_df,hide_index=True)
 
 list_of_events_urls = list(all_event_details_df['URL'])
 all_fight_details_df = pd.DataFrame(columns=config['fight_details_column_names'])
@@ -38,7 +39,8 @@ for url in tqdm_notebook(list_of_events_urls):
     # concat fight details
     all_fight_details_df = pd.concat([all_fight_details_df, fight_details_df])
 
-st.write(all_fight_details_df)
+with st.popover("View Details DF"):
+    st.dataframe(all_fight_details_df,hide_index=True)
 
 # # write fight details to file
 # all_fight_details_df.to_csv(config['fight_details_file_name'], index=False)
