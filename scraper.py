@@ -17,28 +17,28 @@ if not start:
 config = yaml.safe_load(open('scrape_ufc_stats_config.yaml'))
 events_url = config['completed_events_all_url']
 soup = LIB.get_soup(events_url)
-all_event_details_df = LIB.parse_event_details(soup)
+
+def getEvents():
+    all_event_details_df = LIB.parse_event_details(soup)
+    return all_event_details_df
+all_event_details_df = getEvents()
+
 st.write(all_event_details_df)
 
-# all_event_details_df.to_csv(config['event_details_file_name'], index=False)
+list_of_events_urls = list(all_event_details_df['URL'])
+all_fight_details_df = pd.DataFrame(columns=config['fight_details_column_names'])
 
-# list_of_events_urls = list(all_event_details_df['URL'])
-# all_fight_details_df = pd.DataFrame(columns=config['fight_details_column_names'])
+for url in tqdm_notebook(list_of_events_urls):
+    # get soup
+    soup = LIB.get_soup(url)
 
-# # loop through each event and parse fight details
-# for url in tqdm_notebook(list_of_events_urls):
-
-#     # get soup
-#     soup = LIB.get_soup(url)
-
-#     # parse fight links
-#     fight_details_df = LIB.parse_fight_details(soup)
+    # parse fight links
+    fight_details_df = LIB.parse_fight_details(soup)
     
-#     # concat fight details
-#     all_fight_details_df = pd.concat([all_fight_details_df, fight_details_df])
+    # concat fight details
+    all_fight_details_df = pd.concat([all_fight_details_df, fight_details_df])
 
-# # show all fight details
-# st.write(all_fight_details_df.head())
+st.write(all_fight_details_df)
 
 # # write fight details to file
 # all_fight_details_df.to_csv(config['fight_details_file_name'], index=False)
