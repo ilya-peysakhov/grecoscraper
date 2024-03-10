@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+pd.options.mode.copy_on_write = True
+
 from tqdm.notebook import tqdm_notebook
 import scrape_ufc_stats_library as LIB
 import yaml
