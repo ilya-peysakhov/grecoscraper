@@ -4,7 +4,7 @@ from tqdm.notebook import tqdm_notebook
 import scrape_ufc_stats_library as LIB
 import yaml
 
-st.page_config(layout='wide')
+st.set_page_config(layout='wide')
 
 st.title('Scraper')
 
