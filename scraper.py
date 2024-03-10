@@ -8,6 +8,12 @@ st.set_page_config(layout='wide')
 
 st.title('Scraper')
 
+start = st.button('Start')
+
+if not start:
+    st.stop()
+
+
 config = yaml.safe_load(open('scrape_ufc_stats_config.yaml'))
 events_url = config['completed_events_all_url']
 soup = LIB.get_soup(events_url)
