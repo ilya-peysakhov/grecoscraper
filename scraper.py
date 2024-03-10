@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 pd.options.mode.copy_on_write = True
 
-from tqdm.notebook import tqdm_notebook
+# from tqdm.notebook import tqdm_notebook
 import scrape_ufc_stats_library as LIB
 import yaml
 
@@ -40,7 +40,9 @@ with st.popover("View Events DF"):
 list_of_events_urls = list(all_event_details_df['URL'])
 all_fight_details_df = pd.DataFrame(columns=config['fight_details_column_names'])
 
-for url in tqdm_notebook(list_of_events_urls):
+# for url in tqdm_notebook(list_of_events_urls):
+for url in list_of_events_urls:
+
     # get soup
     soup = LIB.get_soup(url)
 
