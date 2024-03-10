@@ -12,7 +12,7 @@ config = yaml.safe_load(open('scrape_ufc_stats_config.yaml'))
 events_url = config['completed_events_all_url']
 soup = LIB.get_soup(events_url)
 all_event_details_df = LIB.parse_event_details(soup)
-display(all_event_details_df)
+st.write(all_event_details_df.head())
 
 all_event_details_df.to_csv(config['event_details_file_name'], index=False)
 
@@ -32,7 +32,7 @@ for url in tqdm_notebook(list_of_events_urls):
     all_fight_details_df = pd.concat([all_fight_details_df, fight_details_df])
 
 # show all fight details
-display(all_fight_details_df)
+st.write(all_fight_details_df.head())
 
 # write fight details to file
 all_fight_details_df.to_csv(config['fight_details_file_name'], index=False)
@@ -62,9 +62,9 @@ for url in tqdm_notebook(list_of_fight_details_urls):
     all_fight_stats_df = pd.concat([all_fight_stats_df, fight_stats_df])
 
 # show all fight results
-display(all_fight_results_df)
+st.write(all_fight_results_df.head())
 # show all fight stats
-display(all_fight_stats_df)
+st.write(all_fight_stats_df.head())
 
 # write to file
 all_fight_results_df.to_csv(config['fight_results_file_name'], index=False)
