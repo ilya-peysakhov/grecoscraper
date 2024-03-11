@@ -26,20 +26,20 @@ if stop:
     st.stop()
 
 config = yaml.safe_load(open('scrape_ufc_stats_config.yaml'))
-events_url = config['completed_events_all_url']
-soup = LIB.get_soup(events_url)
+
 
 @st.cache_data
 def getEvents():
+    events_url = config['completed_events_all_url']
+    soup = LIB.get_soup(events_url)
     all_event_details_df = LIB.parse_event_details(soup)
     return all_event_details_df
-all_event_details_df = getEvents()
+
 
 with st.popover("View Events DF"):
+    all_event_details_df = getEvents()
     st.dataframe(all_event_details_df,hide_index=True)
 
-list_of_events_urls = list(all_event_details_df['URL'])
-all_fight_details_df = pd.DataFrame(columns=config['fight_details_column_names'])
 
 # for url in tqdm_notebook(list_of_events_urls):
 # for url in list_of_events_urls:
@@ -50,6 +50,8 @@ all_fight_details_df = pd.DataFrame(columns=config['fight_details_column_names']
 # Get all fight details in a list comprehension
 @st.cache_data
 def getFD():
+    list_of_events_urls = list(all_event_details_df['URL'])
+    all_fight_details_df = pd.DataFrame(columns=config['fight_details_column_names'])
     all_fight_details = [LIB.parse_fight_details(LIB.get_soup(url)) for url in list_of_events_urls]
 # Concatenate all fight details dataframes at once
     all_fight_details_df = pd.concat(all_fight_details, ignore_index=True)
@@ -59,12 +61,13 @@ with st.popover("View Details DF"):
     all_fight_details_df = getFD()
     st.dataframe(all_fight_details_df,hide_index=True)
 
-list_of_fight_details_urls = list(all_fight_details_df['URL'])
-all_fight_results_df = pd.DataFrame(columns=config['fight_results_column_names'])
-all_fight_stats_df = pd.DataFrame(columns=config['fight_stats_column_names'])
 
 @st.cache_data
 def getResultsStats():
+    list_of_fight_details_urls = list(all_fight_details_df['URL'])
+    all_fight_results_df = pd.DataFrame(columns=config['fight_results_column_names'])
+    all_fight_stats_df = pd.DataFrame(columns=config['fight_stats_column_names'])
+
     for url in list_of_fight_details_urls:
         # get soup
         soup = LIB.get_soup(url)
@@ -82,9 +85,13 @@ def getResultsStats():
         all_fight_stats_df = pd.concat([all_fight_stats_df, fight_stats_df])
     return all_fight_results_df,all_fight_stats_df
 
+
 # show all fight results
 with st.popover('View Results DF'):
+    otherdata = getResultsStats()
+    all_fight_results_df=otherdata[0]
     st.dataframe(all_fight_results_df,hide_index=True)
 # show all fight stats
 with st.popover('View Stats DF'):
+    all_fight_stats_df=otherdata[1]
     st.dataframe(all_fight_stats_df,hide_index=True)
