@@ -87,4 +87,4 @@ with st.popover('View Results DF'):
     st.dataframe(all_fight_results_df,hide_index=True)
 # show all fight stats
 with st.popover('View Stats DF'):
-    st.dataframe(all_fight_stats_df,hide_index=True))
+    st.dataframe(all_fight_stats_df,hide_index=True)
