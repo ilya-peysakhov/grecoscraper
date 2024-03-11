@@ -41,16 +41,15 @@ list_of_events_urls = list(all_event_details_df['URL'])
 all_fight_details_df = pd.DataFrame(columns=config['fight_details_column_names'])
 
 # for url in tqdm_notebook(list_of_events_urls):
-for url in list_of_events_urls:
+# for url in list_of_events_urls:
+#     soup = LIB.get_soup(url)
+#     fight_details_df = LIB.parse_fight_details(soup)
+#     all_fight_details_df = pd.concat([all_fight_details_df, fight_details_df])
 
-    # get soup
-    soup = LIB.get_soup(url)
-
-    # parse fight links
-    fight_details_df = LIB.parse_fight_details(soup)
-    
-    # concat fight details
-    all_fight_details_df = pd.concat([all_fight_details_df, fight_details_df])
+# Get all fight details in a list comprehension
+all_fight_details = [LIB.parse_fight_details(LIB.get_soup(url)) for url in list_of_events_urls]
+# Concatenate all fight details dataframes at once
+all_fight_details_df = pd.concat(all_fight_details, ignore_index=True)
 
 with st.popover("View Details DF"):
     st.dataframe(all_fight_details_df,hide_index=True)
