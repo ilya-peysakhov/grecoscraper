@@ -47,11 +47,14 @@ all_fight_details_df = pd.DataFrame(columns=config['fight_details_column_names']
 #     all_fight_details_df = pd.concat([all_fight_details_df, fight_details_df])
 
 # Get all fight details in a list comprehension
-all_fight_details = [LIB.parse_fight_details(LIB.get_soup(url)) for url in list_of_events_urls]
+def getFD():
+    all_fight_details = [LIB.parse_fight_details(LIB.get_soup(url)) for url in list_of_events_urls]
 # Concatenate all fight details dataframes at once
-all_fight_details_df = pd.concat(all_fight_details, ignore_index=True)
+    all_fight_details_df = pd.concat(all_fight_details, ignore_index=True)
+    return all_fight_details_df
 
 with st.popover("View Details DF"):
+    all_fight_details_df = getFD()
     st.dataframe(all_fight_details_df,hide_index=True)
 
 # # write fight details to file
@@ -87,6 +90,6 @@ with st.popover("View Details DF"):
 # st.write(all_fight_stats_df.head())
 
 # write to file
-all_fight_results_df.to_csv(config['fight_results_file_name'], index=False)
+# all_fight_results_df.to_csv(config['fight_results_file_name'], index=False)
 # write to file
-all_fight_stats_df.to_csv(config['fight_stats_file_name'], index=False)
+# all_fight_stats_df.to_csv(config['fight_stats_file_name'], index=False)
