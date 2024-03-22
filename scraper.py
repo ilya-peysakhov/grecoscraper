@@ -101,7 +101,7 @@ elif view=='Custom Scrape':
     list_of_fight_details_urls = st.text_input('Fight URL')
     
     def getcustomStats():
-        for url in list_of_fight_details_urls:
+        for url in list(list_of_fight_details_url)s:
             # get soup
             soup = LIB.get_soup(url)
             # parse fight results and fight stats
