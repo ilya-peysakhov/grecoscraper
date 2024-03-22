@@ -101,7 +101,7 @@ if view=='Full Scrape':
 
 elif view=='Custom Scrape':
     all_event_details_df = st.text_input('Fight Card')
-    list_of_fight_details_urls = pd.Series(all_event_details_df)
+    all_event_details_df = pd.Series(all_event_details_df)
 
     def getFD():
         list_of_events_urls = list(all_event_details_df['URL'])
