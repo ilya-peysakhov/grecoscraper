@@ -11,7 +11,7 @@ st.set_page_config(layout='wide')
 st.title('Scraper')
 
 view = st.sidebar.radio('Select View',('Full Scrape','Custom Scrape'))
-
+config = yaml.safe_load(open('scrape_ufc_stats_config.yaml'))
 
 if view=='Full Scrape':
     c1, c2 = st.columns(2)
@@ -27,7 +27,7 @@ if view=='Full Scrape':
     if stop:
         st.stop()
     
-    config = yaml.safe_load(open('scrape_ufc_stats_config.yaml'))
+    
     
     
     @st.cache_data
