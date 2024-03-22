@@ -10,7 +10,7 @@ st.set_page_config(layout='wide')
 
 st.title('Scraper')
 
-view = st.sidebar.radio(['Full Scrape','Custom Scrape'])
+view = st.sidebar.radio('Select View',('Full Scrape','Custom Scrape'))
 
 
 if view=='Full Scrape':
