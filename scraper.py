@@ -118,4 +118,4 @@ elif view=='Custom Scrape':
             
     if st.button('Start'):
         data = getcustomStats()
-        st.write(data
+        st.write(data)
