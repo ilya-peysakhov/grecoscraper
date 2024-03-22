@@ -135,7 +135,7 @@ elif view=='Custom Scrape':
             
     if st.button('Start'):
         all_fight_details_df = getFD()
-        st.dataframe(all_fight_details_df)
+        st.dataframe(all_fight_details_df,hide_index=True)
         data = getcustomStats()
         st.dataframe(data[0],hide_index=True)
         st.dataframe(data[1],hide_index=True)
