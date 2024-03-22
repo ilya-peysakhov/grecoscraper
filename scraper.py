@@ -100,7 +100,6 @@ if view=='Full Scrape':
 elif view=='Custom Scrape':
     list_of_fight_details_urls = st.text_input('Fight URL')
     list_of_fight_details_urls = pd.Series(list_of_fight_details_urls)
-    st.write(list_of_fight_details_urls)
     def getcustomStats():
         all_fight_results_df = pd.DataFrame(columns=config['fight_results_column_names'])
         all_fight_stats_df = pd.DataFrame(columns=config['fight_stats_column_names'])
@@ -123,5 +122,5 @@ elif view=='Custom Scrape':
             
     if st.button('Start'):
         data = getcustomStats()
-        st.write(data[0])
-        st.write(data[1])
+        st.dataframe(data[0],hide_index=True)
+        st.dataframe(data[1],hide_index=True)
