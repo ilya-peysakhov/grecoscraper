@@ -99,7 +99,6 @@ if view=='Full Scrape':
         st.dataframe(all_fight_stats_df,hide_index=True)
 elif view=='Custom Scrape':
     list_of_fight_details_urls = st.text_input('Fight URL')
-    list_of_fight_details_urls = list(list_of_fight_details_urls)
     st.write(list_of_fight_details_urls)
     def getcustomStats():
         for url in list_of_fight_details_urls:
