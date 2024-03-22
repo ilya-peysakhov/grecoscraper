@@ -98,4 +98,24 @@ if view=='Full Scrape':
         all_fight_stats_df=otherdata[1]
         st.dataframe(all_fight_stats_df,hide_index=True)
 elif view=='Custom Scrape':
-    st.write('lol')
+    list_of_fight_details_urls = st.text_input('Fight URL')
+    
+    def getcustomStats():
+        for url in list_of_fight_details_urls:
+            # get soup
+            soup = LIB.get_soup(url)
+            # parse fight results and fight stats
+            fight_results_df, fight_stats_df = LIB.parse_organise_fight_results_and_stats(
+                soup,
+                url,
+                config['fight_results_column_names'],
+                config['totals_column_names'],
+                config['significant_strikes_column_names']
+                )
+            # concat fight stats
+            all_fight_stats_df = pd.concat([all_fight_stats_df, fight_stats_df])
+            return all_fight_stats_df
+            
+    if st.button('Start'):
+        data = getcustomStats()
+        st.write(data
