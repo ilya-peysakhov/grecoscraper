@@ -133,6 +133,7 @@ elif view=='Custom Scrape':
             
     if st.button('Start'):
         fd = getFD()
+        st.dataframe(fd)
         data = getcustomStats()
         st.dataframe(data[0],hide_index=True)
         st.dataframe(data[1],hide_index=True)
