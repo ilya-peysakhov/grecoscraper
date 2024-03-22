@@ -97,9 +97,20 @@ if view=='Full Scrape':
     with st.popover('View Stats DF'):
         all_fight_stats_df=otherdata[1]
         st.dataframe(all_fight_stats_df,hide_index=True)
+
+
 elif view=='Custom Scrape':
-    list_of_fight_details_urls = st.text_input('Fight URL')
-    list_of_fight_details_urls = pd.Series(list_of_fight_details_urls)
+    all_event_details_df = st.text_input('Fight Card')
+    list_of_fight_details_urls = pd.Series(all_event_details_df)
+
+    def getFD():
+        list_of_events_urls = list(all_event_details_df['URL'])
+        all_fight_details_df = pd.DataFrame(columns=config['fight_details_column_names'])
+        all_fight_details = [LIB.parse_fight_details(LIB.get_soup(url)) for url in list_of_events_urls]
+    # Concatenate all fight details dataframes at once
+        all_fight_details_df = pd.concat(all_fight_details, ignore_index=True)
+        return all_fight_details_df
+
     def getcustomStats():
         all_fight_results_df = pd.DataFrame(columns=config['fight_results_column_names'])
         all_fight_stats_df = pd.DataFrame(columns=config['fight_stats_column_names'])
@@ -121,6 +132,7 @@ elif view=='Custom Scrape':
         return all_fight_results_df,all_fight_stats_df
             
     if st.button('Start'):
+        fd = getFD()
         data = getcustomStats()
         st.dataframe(data[0],hide_index=True)
         st.dataframe(data[1],hide_index=True)
