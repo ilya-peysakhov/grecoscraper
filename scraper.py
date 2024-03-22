@@ -102,6 +102,8 @@ elif view=='Custom Scrape':
     list_of_fight_details_urls = pd.Series(list_of_fight_details_urls)
     st.write(list_of_fight_details_urls)
     def getcustomStats():
+        all_fight_results_df = pd.DataFrame(columns=config['fight_results_column_names'])
+        all_fight_stats_df = pd.DataFrame(columns=config['fight_stats_column_names'])
         for url in list_of_fight_details_urls:
             # get soup
             soup = LIB.get_soup(url)
@@ -114,8 +116,10 @@ elif view=='Custom Scrape':
                 config['significant_strikes_column_names']
                 )
             # concat fight stats
-            all_fight_stats_df = pd.concat([all_fight_stats_df, fight_stats_df])
-            return all_fight_stats_df
+        all_fight_results_df = pd.concat([all_fight_results_df, fight_results_df])
+            # concat fight stats
+        all_fight_stats_df = pd.concat([all_fight_stats_df, fight_stats_df])
+        return all_fight_results_df,all_fight_stats_df
             
     if st.button('Start'):
         data = getcustomStats()
