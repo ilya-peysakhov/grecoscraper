@@ -104,7 +104,7 @@ elif view=='Custom Scrape':
     all_event_details_df = pd.Series(all_event_details_df)
 
     def getFD():
-        list_of_events_urls = list(all_event_details_df['URL'])
+        list_of_events_urls = list(all_event_details_df)
         all_fight_details_df = pd.DataFrame(columns=config['fight_details_column_names'])
         all_fight_details = [LIB.parse_fight_details(LIB.get_soup(url)) for url in list_of_events_urls]
     # Concatenate all fight details dataframes at once
